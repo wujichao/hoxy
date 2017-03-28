@@ -28,12 +28,24 @@ let asHandlers = {
   'json': r => {
     // TODO: test to ensure that parse errors here propagate to error log.
     // TODO: test to ensure that parse errors here fail gracefully.
-    r.json = JSON.parse(r._source.toString())
+    var json = {};
+
+    try {
+      json = JSON.parse(r._source.toString());
+    } catch (e) {}
+
+    r.json = json;
   },
   'params': r => {
     // TODO: test to ensure that parse errors here propagate to error log.
     // TODO: test to ensure that parse errors here fail gracefully.
-    r.params = querystring.parse(r._source.toString())
+    var params = {};
+
+    try {
+      params = querystring.parse(r._source.toString());
+    } catch (e) {}
+    
+    r.params = params;
   },
   'buffer': () => {},
   'string': () => {},
